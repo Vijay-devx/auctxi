@@ -1,0 +1,6 @@
+INSERT INTO auctions (id, name, status, start_time, end_time, timer_end_time, current_player_id, created_at, updated_at) VALUES
+('c2065a7b-8d91-4a67-9c8f-126012c8f8c6', 'IPL Mega Auction 2025', 'COMPLETED', '2026-07-13 12:43:00', '2026-07-13 18:43:00', NULL, NULL, '2026-06-23 12:43:00', '2026-06-23 12:43:00'),
+('41c4327e-f935-493a-92c4-0e9fb261d752', 'IPL Mega Auction 2026', 'LIVE', '2026-07-23 12:43:00', '2026-07-23 18:43:00', NULL, NULL, '2026-06-23 12:43:00', '2026-06-23 12:43:00'),
+('b0e42df5-3ff3-4dac-834c-2643f866039b', 'IPL Mega Auction 2027', 'UPCOMING', '2026-08-02 12:43:00', '2026-08-02 18:43:00', NULL, NULL, '2026-06-23 12:43:00', '2026-06-23 12:43:00'),
+('eb730938-d7f8-44a3-8360-1fa2f37a70ce', 'IPL Mega Auction 2028', 'UPCOMING', '2026-08-12 12:43:00', '2026-08-12 18:43:00', NULL, NULL, '2026-06-23 12:43:00', '2026-06-23 12:43:00'),
+('aa3d1e08-6d35-4140-91a8-da3889a200a1', 'IPL Mega Auction 2029', 'UPCOMING', '2026-08-22 12:43:00', '2026-08-22 18:43:00', NULL, NULL, '2026-06-23 12:43:00', '2026-06-23 12:43:00');

@@ -1,0 +1,30 @@
+:root {
+
+  /* Brand */
+  --color-primary: #2563eb;
+  --color-primary-hover: #1d4ed8;
+
+  /* Success */
+  --color-success: #16a34a;
+
+  /* Warning */
+  --color-warning: #f59e0b;
+
+  /* Danger */
+  --color-danger: #dc2626;
+
+  /* Info */
+  --color-info: #0ea5e9;
+
+  /* Background */
+  --color-background: #f8fafc;
+  --color-surface: #ffffff;
+
+  /* Text */
+  --color-text-primary: #111827;
+  --color-text-secondary: #6b7280;
+
+  /* Border */
+  --color-border: #e5e7eb;
+
+}

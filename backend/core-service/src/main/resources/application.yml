@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: core-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/auctxi_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: manager
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      idle-timeout: 30000
+      max-lifetime: 1800000
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+  mail:
+    host: localhost
+    port: 25
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+server:
+  port: 8080
+
+app:
+  jwt-secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+  jwt-expiration-milliseconds: 86400000 # 1 day in ms
+  jwt-refresh-expiration-milliseconds: 604800000 # 7 days in ms
+  cors:
+    allowed-origins: ${CORS_ORIGINS:http://localhost:5173}
+
+notification-service:
+  base-url: http://localhost:5002

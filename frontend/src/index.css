@@ -1,0 +1,34 @@
+@import "tailwindcss";
+@import "./styles/design-tokens.css";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-brand: #f59e0b; /* Beautiful Amber/Gold */
+  --color-brand-hover: #d97706;
+
+  --color-dark-bg: #0f172a;
+  --color-dark-surface: #1e293b;
+  --color-dark-surface-hover: #334155;
+  --color-dark-border: #334155;
+}
+
+@layer base {
+  body {
+    @apply bg-[#F8F9FA] text-[#1F2937] antialiased font-sans;
+  }
+  
+  /* Global Scrollbar styling for that premium feel */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-slate-100;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-300 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-400;
+  }
+}
