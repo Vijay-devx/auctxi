@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 
 const api = axios.create({
   // Node.js API Gateway is the single public entry point
-  baseURL: '', 
+  baseURL: import.meta.env.VITE_API_BASE_URL || '', 
   headers: {
     'Content-Type': 'application/json',
   },
@@ -49,7 +49,7 @@ api.interceptors.response.use(
 
 // paymentApi routes through the Gateway as well
 const paymentApi = axios.create({
-  baseURL: '',
+  baseURL: import.meta.env.VITE_API_BASE_URL || '',
   headers: {
     'Content-Type': 'application/json',
   },

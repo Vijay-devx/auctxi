@@ -37,7 +37,8 @@ export const useLiveAuction = (auctionId, playerId = null, onStateChange = null)
   useEffect(() => {
     if (!auctionId) return;
 
-    const serverUrl = '/ws-auction';
+    const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
+    const serverUrl = `${baseUrl}/ws-auction`;
 
     const client = new Client({
       webSocketFactory: () => new SockJS(serverUrl),
