@@ -35,11 +35,13 @@ const ChatWidget = () => {
       const auctionIdMatch = window.location.pathname.match(/live-auction\/([^/]+)/);
       const currentAuctionId = auctionIdMatch ? auctionIdMatch[1] : null;
       
-      const response = await fetch(`/api/v1/ai/chat`, {
+      const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
+      const response = await fetch(`${baseUrl}/api/v1/ai/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'ngrok-skip-browser-warning': 'true'
         },
         body: JSON.stringify({ message: userMessage, auctionId: currentAuctionId })
       });
