@@ -75,6 +75,8 @@ services:
     envVars:
       - key: ASPNETCORE_URLS
         value: "http://+:8080"
+      - key: ConnectionStrings__DefaultConnection
+        sync: false
       - key: RABBITMQ_HOST
         value: "warthog.lmq.cloudamqp.com"
       - key: RABBITMQ_PORT
@@ -86,7 +88,23 @@ services:
       - key: USE_MOCK_EMAIL
         value: "true"
 
-  # 4. AI Service (Python)
+  # 4. Payment Service (.NET)
+  - type: web
+    name: auctxi-payment
+    env: docker
+    dockerfilePath: ./backend/PaymentService/Dockerfile
+    plan: free
+    envVars:
+      - key: ASPNETCORE_URLS
+        value: "http://+:8080"
+      - key: ConnectionStrings__DefaultConnection
+        sync: false
+      - key: Razorpay__KeyId
+        sync: false
+      - key: Razorpay__KeySecret
+        sync: false
+
+  # 5. AI Service (Python)
   - type: web
     name: auctxi-ai
     env: docker
