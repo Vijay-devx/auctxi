@@ -35,7 +35,7 @@ const ChatWidget = () => {
       const auctionIdMatch = window.location.pathname.match(/live-auction\/([^/]+)/);
       const currentAuctionId = auctionIdMatch ? auctionIdMatch[1] : null;
       
-      const response = await fetch(`http://localhost:3000/api/v1/ai/chat`, {
+      const response = await fetch(`/api/v1/ai/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -94,7 +94,8 @@ def get_my_live_data(user_context: dict) -> str:
         # Also fetch wallet balance from Payment Service for clients
         if role_upper == "CLIENT":
             try:
-                wallet_res = requests.get(f"http://localhost:5001/api/v1/payments/wallet/{user_id}")
+                payment_service_url = os.getenv("PAYMENT_SERVICE_URL", "http://payment-service:8080")
+                wallet_res = requests.get(f"{payment_service_url}/api/v1/payments/wallet/{user_id}")
                 if wallet_res.status_code == 200:
                     wallet_data = wallet_res.json()
                     context_response["walletBalance"] = wallet_data.get("balance", 0)

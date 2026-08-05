@@ -32,11 +32,15 @@ public class NotificationConsumerService : BackgroundService
         _logger.LogInformation("Connecting to RabbitMQ...");
         try
         {
-            var factory = new ConnectionFactory { HostName = "localhost", Port = 5672 };
+            var factory = new ConnectionFactory
+            {
+                HostName = Environment.GetEnvironmentVariable("RABBITMQ_HOST") ?? "localhost",
+                Port = int.TryParse(Environment.GetEnvironmentVariable("RABBITMQ_PORT"), out var p) ? p : 5672
+            };
             _connection = await factory.CreateConnectionAsync();
             _channel = await _connection.CreateChannelAsync();
 
-            await _channel.ExchangeDeclareAsync(exchange: ExchangeName, type: ExchangeType.Topic);
+            await _channel.ExchangeDeclareAsync(exchange: ExchangeName, type: ExchangeType.Topic, durable: true);
             await _channel.QueueDeclareAsync(queue: QueueName, durable: true, exclusive: false, autoDelete: false, arguments: null);
             await _channel.QueueBindAsync(queue: QueueName, exchange: ExchangeName, routingKey: RoutingKey);
 

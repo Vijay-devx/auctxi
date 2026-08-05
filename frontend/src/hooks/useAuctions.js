@@ -81,7 +81,7 @@ export function useAuctions() {
 
     // WebSocket connection for real-time new auctions
     useEffect(() => {
-        const serverUrl = 'http://localhost:8080/ws-auction';
+        const serverUrl = '/ws-auction';
         const client = new Client({
             webSocketFactory: () => new SockJS(serverUrl),
             reconnectDelay: 5000,

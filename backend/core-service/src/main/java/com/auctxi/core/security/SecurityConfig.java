@@ -91,6 +91,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/internal/**").permitAll()
                 // Permit Async Dispatch for SSE streaming
                 .dispatcherTypeMatchers(jakarta.servlet.DispatcherType.ASYNC).permitAll()
+                // Allow actuator endpoints (like /actuator/health) for Docker healthcheck
+                .requestMatchers("/actuator/**").permitAll()
                 // All other endpoints require a valid JWT token
                 .anyRequest().authenticated()
         );

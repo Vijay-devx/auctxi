@@ -2,9 +2,9 @@ spring:
   application:
     name: core-service
   datasource:
-    url: jdbc:mysql://localhost:3306/auctxi_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
-    username: root
-    password: manager
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/auctxi_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true}
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD:manager}
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       maximum-pool-size: 20
@@ -19,9 +19,16 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.MySQLDialect
+  rabbitmq:
+    host: ${SPRING_RABBITMQ_HOST:localhost}
+    port: ${SPRING_RABBITMQ_PORT:5672}
+    username: ${SPRING_RABBITMQ_USERNAME:guest}
+    password: ${SPRING_RABBITMQ_PASSWORD:guest}
   mail:
-    host: localhost
-    port: 25
+    host: ${SPRING_MAIL_HOST:localhost}
+    port: ${SPRING_MAIL_PORT:25}
+    username: ${SPRING_MAIL_USERNAME:}
+    password: ${SPRING_MAIL_PASSWORD:}
     properties:
       mail:
         smtp:
@@ -36,16 +43,19 @@ management:
   endpoint:
     health:
       show-details: always
+  health:
+    mail:
+      enabled: false
 
 server:
   port: 8080
 
 app:
-  jwt-secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+  jwt-secret: ${APP_JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
   jwt-expiration-milliseconds: 86400000 # 1 day in ms
   jwt-refresh-expiration-milliseconds: 604800000 # 7 days in ms
   cors:
     allowed-origins: ${CORS_ORIGINS:http://localhost:5173}
 
 notification-service:
-  base-url: http://localhost:5002
+  base-url: ${NOTIFICATION_SERVICE_URL:http://localhost:5002}

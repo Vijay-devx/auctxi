@@ -29,11 +29,8 @@ public class MediaController {
         
         String filename = storageService.store(file);
         
-        // Build the full URL to access the uploaded file
-        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/uploads/")
-                .path(filename)
-                .toUriString();
+        // Return a relative path so the frontend browser can dynamically resolve the host
+        String fileDownloadUri = "/uploads/" + filename;
 
         Map<String, String> response = new HashMap<>();
         response.put("filename", filename);

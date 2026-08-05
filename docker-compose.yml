@@ -1,0 +1,260 @@
+# =============================================================
+# AuctXI — Docker Compose
+# =============================================================
+# Usage:
+#   1. cp .env.example .env  (fill in your real secrets)
+#   2. docker compose build
+#   3. docker compose up -d
+#   4. docker compose logs -f
+# =============================================================
+
+name: auctxi
+
+# ── Shared network (all containers talk to each other by service name) ─────────
+networks:
+  auctxi-network:
+    driver: bridge
+
+# ── Named volumes (data persists across restarts) ──────────────────────────────
+volumes:
+  mysql-data:
+  rabbitmq-data:
+  redis-data:
+  core-uploads:
+  faiss-index:
+
+services:
+
+  # ────────────────────────────────────────────────────────────────────────────
+  # INFRASTRUCTURE
+  # ────────────────────────────────────────────────────────────────────────────
+
+  mysql:
+    image: mysql:8.0
+    container_name: auctxi-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      # Services connect as root; each service creates its own DB on startup
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - auctxi-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: auctxi-rabbitmq
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    ports:
+      - "5672:5672"   # AMQP
+      - "15672:15672" # Management UI  →  http://localhost:15672
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    networks:
+      - auctxi-network
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "check_port_connectivity"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
+  redis:
+    image: redis:7-alpine
+    container_name: auctxi-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - auctxi-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ────────────────────────────────────────────────────────────────────────────
+  # BACKEND SERVICES
+  # ────────────────────────────────────────────────────────────────────────────
+
+  core-service:
+    build:
+      context: ./backend/core-service
+      dockerfile: Dockerfile
+    container_name: auctxi-core
+    restart: unless-stopped
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/auctxi_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: ${RABBITMQ_USER}
+      SPRING_RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
+      SPRING_MAIL_HOST: ${SPRING_MAIL_HOST}
+      SPRING_MAIL_PORT: ${SPRING_MAIL_PORT}
+      SPRING_MAIL_USERNAME: ${SPRING_MAIL_USERNAME}
+      SPRING_MAIL_PASSWORD: ${SPRING_MAIL_PASSWORD}
+      APP_JWT_SECRET: ${JWT_SECRET}
+      CORS_ORIGINS: http://localhost:8081,http://10.103.160.46:8081
+      NOTIFICATION_SERVICE_URL: http://notification-service:8080
+      AUCTXI_PAYMENT_URL: http://payment-service:8080/api/v1/payments
+      AI_SERVICE_URL: http://ai-service:8000
+    ports:
+      - "8080:8080"
+    volumes:
+      - core-uploads:/app/uploads
+    depends_on:
+      mysql:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - auctxi-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/actuator/health || exit 1"]
+      interval: 20s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+
+  notification-service:
+    build:
+      context: ./backend/NotificationService
+      dockerfile: Dockerfile
+    container_name: auctxi-notification
+    restart: unless-stopped
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=mysql;Port=3306;Database=auctxi_notifications;User=root;Password=${MYSQL_ROOT_PASSWORD};AllowPublicKeyRetrieval=True;"
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      UseMockEmail: ${USE_MOCK_EMAIL:-true}
+      Smtp__Host: ${SMTP_HOST}
+      Smtp__Port: ${SMTP_PORT}
+      Smtp__Username: ${SMTP_USERNAME}
+      Smtp__Password: ${SMTP_PASSWORD}
+      Smtp__FromEmail: ${SMTP_FROM_EMAIL}
+    ports:
+      - "5002:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - auctxi-network
+
+  payment-service:
+    build:
+      context: ./backend/PaymentService
+      dockerfile: Dockerfile
+    container_name: auctxi-payment
+    restart: unless-stopped
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=mysql;Port=3306;Database=auctxi_payments;User=root;Password=${MYSQL_ROOT_PASSWORD};AllowPublicKeyRetrieval=True;"
+      Razorpay__KeyId: ${RAZORPAY_KEY_ID}
+      Razorpay__KeySecret: ${RAZORPAY_KEY_SECRET}
+    ports:
+      - "5001:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - auctxi-network
+
+  ai-service:
+    build:
+      context: ./backend/ai-service
+      dockerfile: Dockerfile
+    container_name: auctxi-ai
+    restart: unless-stopped
+    environment:
+      LLM_PROVIDER: ${LLM_PROVIDER:-openai}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-https://api.z.ai/api/paas/v4/}
+      OPENAI_MODEL: ${OPENAI_MODEL:-GLM-4.7-Flash}
+      OPENAI_TEMPERATURE: ${OPENAI_TEMPERATURE:-0.3}
+      OPENAI_MAX_TOKENS: ${OPENAI_MAX_TOKENS:-1024}
+      OLLAMA_URL: ${OLLAMA_URL:-http://localhost:11434}
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-llama3.2}
+      SPRING_BOOT_URL: http://core-service:8080
+      AI_INTERNAL_TOKEN: ${AI_INTERNAL_TOKEN}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_DB: 0
+      REDIS_CHAT_HISTORY_TTL: ${REDIS_CHAT_HISTORY_TTL:-3600}
+      AI_SERVICE_PORT: 8000
+      FAISS_INDEX_PATH: /app/faiss_index
+    ports:
+      - "8000:8000"
+    volumes:
+      - faiss-index:/app/faiss_index
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - auctxi-network
+
+  # ────────────────────────────────────────────────────────────────────────────
+  # API GATEWAY
+  # ────────────────────────────────────────────────────────────────────────────
+
+  api-gateway:
+    build:
+      context: ./backend/api-gateway
+      dockerfile: Dockerfile
+    container_name: auctxi-gateway
+    restart: unless-stopped
+    environment:
+      PORT: 3000
+      JWT_SECRET: ${JWT_SECRET}
+      CORE_SERVICE_URL: http://core-service:8080
+      PAYMENT_SERVICE_URL: http://payment-service:8080
+      AI_SERVICE_URL: http://ai-service:8000
+    ports:
+      - "3000:3000"
+    depends_on:
+      core-service:
+        condition: service_healthy
+      payment-service:
+        condition: service_started
+      ai-service:
+        condition: service_started
+    networks:
+      - auctxi-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  # ────────────────────────────────────────────────────────────────────────────
+  # FRONTEND
+  # ────────────────────────────────────────────────────────────────────────────
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: auctxi-frontend
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    depends_on:
+      api-gateway:
+        condition: service_healthy
+    networks:
+      - auctxi-network

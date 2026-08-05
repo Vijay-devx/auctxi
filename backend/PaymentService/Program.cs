@@ -13,15 +13,20 @@ builder.Services.AddControllers()
 builder.Services.AddOpenApi();
 
 // Configure MySQL Database using Pomelo
-var connectionString = "Server=localhost;Database=auctxi_payments;User=root;Password=manager;AllowPublicKeyRetrieval=True;";
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? "Server=localhost;Database=auctxi_payments;User=root;Password=manager;AllowPublicKeyRetrieval=True;";
 builder.Services.AddDbContext<PaymentDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 builder.Services.AddScoped<IPaymentLogicService, PaymentLogicService>();
 builder.Services.AddScoped<IRazorpayService, RazorpayService>();
 
-// Configure WebHost to run on port 5001
-builder.WebHost.UseUrls("http://localhost:5001");
+// ASPNETCORE_URLS env var controls the port (set to http://+:8080 in Dockerfile for Docker).
+// Falls back to port 5001 for local development without Docker.
+if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("ASPNETCORE_URLS")))
+{
+    builder.WebHost.UseUrls("http://localhost:5001");
+}
 
 var app = builder.Build();
 

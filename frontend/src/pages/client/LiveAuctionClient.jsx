@@ -63,7 +63,8 @@ export default function LiveAuctionClient() {
   useEffect(() => {
     if (auction?.timerEndTime && auction?.status === 'ONGOING' && currentPlayer) {
       const updateTimer = () => {
-        const end = new Date(auction.timerEndTime).getTime();
+        const timeStr = auction.timerEndTime.endsWith('Z') ? auction.timerEndTime : `${auction.timerEndTime}Z`;
+        const end = new Date(timeStr).getTime();
         const now = Date.now();
         const diff = Math.max(0, Math.floor((end - now) / 1000));
         setBidTimer(diff);

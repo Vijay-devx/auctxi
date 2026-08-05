@@ -35,7 +35,7 @@ export const useNotifications = () => {
     let client = null;
     if (user?.id) {
        client = new Client({
-          webSocketFactory: () => new SockJS('http://localhost:8080/ws-auction'),
+          webSocketFactory: () => new SockJS('/ws-auction'),
           reconnectDelay: 10000,
        });
        

@@ -9,12 +9,17 @@ builder.Services.AddOpenApi();
 builder.Services.AddHostedService<NotificationService.Services.NotificationConsumerService>();
 
 // Configure MySQL Database using Pomelo
-var connectionString = "Server=localhost;Database=auctxi_notifications;User=root;Password=manager;AllowPublicKeyRetrieval=True;";
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? "Server=localhost;Database=auctxi_notifications;User=root;Password=manager;AllowPublicKeyRetrieval=True;";
 builder.Services.AddDbContext<NotificationDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-// Configure WebHost to run on port 5002
-builder.WebHost.UseUrls("http://localhost:5002");
+// ASPNETCORE_URLS env var controls the port (set to http://+:8080 in Dockerfile for Docker).
+// Falls back to port 5002 for local development without Docker.
+if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("ASPNETCORE_URLS")))
+{
+    builder.WebHost.UseUrls("http://localhost:5002");
+}
 
 // Configure Notification Services
 builder.Services.AddScoped<NotificationService.Services.IInAppNotificationService, NotificationService.Services.InAppNotificationService>();

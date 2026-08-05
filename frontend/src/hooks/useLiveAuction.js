@@ -37,7 +37,7 @@ export const useLiveAuction = (auctionId, playerId = null, onStateChange = null)
   useEffect(() => {
     if (!auctionId) return;
 
-    const serverUrl = 'http://localhost:8080/ws-auction';
+    const serverUrl = '/ws-auction';
 
     const client = new Client({
       webSocketFactory: () => new SockJS(serverUrl),

@@ -4,7 +4,7 @@ import {
 } from 'recharts';
 import './DashboardOverview.css';
 
-const API_BASE_URL = 'http://localhost:8080/api/v1';
+const API_BASE_URL = '/api/v1';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 

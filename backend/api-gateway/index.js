@@ -58,17 +58,21 @@ const authenticateToken = (req, res, next) => {
 app.use('/api', authenticateToken);
 
 // 4. Reverse Proxy Configurations
+// In Docker, these resolve to container names. Locally, they fall back to localhost.
+const PAYMENT_SERVICE_URL = process.env.PAYMENT_SERVICE_URL || 'http://localhost:5001';
+const AI_SERVICE_URL      = process.env.AI_SERVICE_URL      || 'http://localhost:8000';
+const CORE_SERVICE_URL    = process.env.CORE_SERVICE_URL    || 'http://localhost:8080';
 
 // Proxy to ASP.NET Core Payment Service
 app.use('/api/v1/payments', createProxyMiddleware({
-    target: 'http://localhost:5001',
+    target: PAYMENT_SERVICE_URL,
     changeOrigin: true,
     pathRewrite: (path, req) => req.originalUrl
 }));
 
 // Proxy to Python AI Service
 app.use('/api/v1/ai', createProxyMiddleware({
-    target: 'http://localhost:5003',
+    target: AI_SERVICE_URL,
     changeOrigin: true,
     pathRewrite: (path, req) => req.originalUrl
 }));
@@ -77,14 +81,14 @@ app.use('/api/v1/ai', createProxyMiddleware({
 
 // Proxy all other /api/* requests to Spring Boot Core Service
 app.use('/api', createProxyMiddleware({
-    target: 'http://localhost:8080',
+    target: CORE_SERVICE_URL,
     changeOrigin: true,
     pathRewrite: (path, req) => req.originalUrl
 }));
 
 // Route /uploads/* to Spring Boot Core Service
 app.use('/uploads', createProxyMiddleware({
-    target: 'http://localhost:8080',
+    target: CORE_SERVICE_URL,
     changeOrigin: true,
     pathRewrite: (path, req) => req.originalUrl
 }));
@@ -92,7 +96,7 @@ app.use('/uploads', createProxyMiddleware({
 // Start the server
 app.listen(PORT, () => {
     console.log(`[Gateway] API Gateway running on http://localhost:${PORT}`);
-    console.log(`[Gateway] Proxying /api/v1/payments -> http://localhost:5001`);
-    console.log(`[Gateway] Proxying /api/v1/ai -> http://localhost:5003`);
-    console.log(`[Gateway] Proxying /api/* -> http://localhost:8080`);
+    console.log(`[Gateway] Proxying /api/v1/payments -> ${PAYMENT_SERVICE_URL}`);
+    console.log(`[Gateway] Proxying /api/v1/ai      -> ${AI_SERVICE_URL}`);
+    console.log(`[Gateway] Proxying /api/*           -> ${CORE_SERVICE_URL}`);
 });
