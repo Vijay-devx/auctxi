@@ -109,7 +109,7 @@ services:
       SPRING_MAIL_USERNAME: ${SPRING_MAIL_USERNAME}
       SPRING_MAIL_PASSWORD: ${SPRING_MAIL_PASSWORD}
       APP_JWT_SECRET: ${JWT_SECRET}
-      CORS_ORIGINS: http://localhost:8081,http://10.103.160.46:8081
+      CORS_ORIGINS: http://localhost:8081,http://10.103.160.46:8081,https://auctxi-eosin.vercel.app
       NOTIFICATION_SERVICE_URL: http://notification-service:8080
       AUCTXI_PAYMENT_URL: http://payment-service:8080/api/v1/payments
       AI_SERVICE_URL: http://ai-service:8000
