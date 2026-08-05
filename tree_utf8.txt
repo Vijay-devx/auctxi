@@ -1,0 +1,713 @@
+﻿Folder PATH listing for volume Windows-SSD
+Volume serial number is 0000008F BA3C:23E0
+C:.
+|   .env
+|   .env - Copy.example.template
+|   .env.example
+|   .gitignore
+|   AuctXI ù Docker Deployment Plan.md
+|   core_logs.txt
+|   docker-compose.yml
+|   gateway_logs.txt
+|   Plan_Sharing AuctXI with External Users.md
+|   tree.txt
+|   tree_utf8.txt
+|   
++---backend
+|   +---ai-service
+|   |   |   .env.example
+|   |   |   Dockerfile
+|   |   |   ingest.py
+|   |   |   main.py
+|   |   |   package-lock.json
+|   |   |   requirements.txt
+|   |   |   test_groq_tool.py
+|   |   |   test_llama.py
+|   |   |   test_post.py
+|   |   |   test_provider.py
+|   |   |   test_redis.py
+|   |   |   test_spring_tools.py
+|   |   |   
+|   |   +---app
+|   |   |   |   config.py
+|   |   |   |   
+|   |   |   +---api
+|   |   |   |       chat.py
+|   |   |   |       generate.py
+|   |   |   |       
+|   |   |   +---services
+|   |   |   |       chat_service.py
+|   |   |   |       context_fetcher.py
+|   |   |   |       intent_service.py
+|   |   |   |       llm_client.py
+|   |   |   |       memory_service.py
+|   |   |   |       prompt_builder.py
+|   |   |   |       retrieval_service.py
+|   |   |   |       
+|   |   |   \---tools
+|   |   |           spring_tools.py
+|   |   |           
+|   |   \---knowledge
+|   |       +---admin
+|   |       |       user_management.md
+|   |       |       
+|   |       +---client
+|   |       |       how_to_participate.md
+|   |       |       
+|   |       +---common
+|   |       |       platform_overview.md
+|   |       |       
+|   |       \---manager
+|   |               create_auction.md
+|   |               
+|   +---api-gateway
+|   |       Dockerfile
+|   |       index.js
+|   |       package-lock.json
+|   |       package.json
+|   |       
+|   +---core-service
+|   |   |   .gitattributes
+|   |   |   .gitignore
+|   |   |   Dockerfile
+|   |   |   mvnw
+|   |   |   mvnw.cmd
+|   |   |   pom.xml
+|   |   |   
+|   |   +---.mvn
+|   |   |   \---wrapper
+|   |   |           maven-wrapper.properties
+|   |   |           
+|   |   +---src
+|   |   |   +---main
+|   |   |   |   +---java
+|   |   |   |   |   \---com
+|   |   |   |   |       \---auctxi
+|   |   |   |   |           \---core
+|   |   |   |   |               |   CoreServiceApplication.java
+|   |   |   |   |               |   
+|   |   |   |   |               +---config
+|   |   |   |   |               |       AppConfig.java
+|   |   |   |   |               |       DataSeeder.java
+|   |   |   |   |               |       OpenApiConfig.java
+|   |   |   |   |               |       RabbitMQConfig.java
+|   |   |   |   |               |       WebMvcConfig.java
+|   |   |   |   |               |       WebSocketConfig.java
+|   |   |   |   |               |       
+|   |   |   |   |               +---controller
+|   |   |   |   |               |   |   AuctionApplicationController.java
+|   |   |   |   |               |   |   AuctionController.java
+|   |   |   |   |               |   |   AuctionInvitationController.java
+|   |   |   |   |               |   |   AuctionRuleTemplateController.java
+|   |   |   |   |               |   |   AuctionWatchlistController.java
+|   |   |   |   |               |   |   AuthController.java
+|   |   |   |   |               |   |   BiddingController.java
+|   |   |   |   |               |   |   DashboardController.java
+|   |   |   |   |               |   |   GlobalSettingController.java
+|   |   |   |   |               |   |   LiveAuctionWebSocketController.java
+|   |   |   |   |               |   |   ManagerAuctionPlayerController.java
+|   |   |   |   |               |   |   MediaController.java
+|   |   |   |   |               |   |   NotificationController.java
+|   |   |   |   |               |   |   PlayerController.java
+|   |   |   |   |               |   |   ReportController.java
+|   |   |   |   |               |   |   TeamController.java
+|   |   |   |   |               |   |   UserController.java
+|   |   |   |   |               |   |   WatchlistController.java
+|   |   |   |   |               |   |   
+|   |   |   |   |               |   \---ai
+|   |   |   |   |               |           AIChatController.java
+|   |   |   |   |               |           InternalAIController.java
+|   |   |   |   |               |           
+|   |   |   |   |               +---dto
+|   |   |   |   |               |   |   BidMessage.java
+|   |   |   |   |               |   |   
+|   |   |   |   |               |   +---ai
+|   |   |   |   |               |   |       AdminContextResponse.java
+|   |   |   |   |               |   |       AIChatRequest.java
+|   |   |   |   |               |   |       AIChatResponse.java
+|   |   |   |   |               |   |       ClientContextResponse.java
+|   |   |   |   |               |   |       ManagerContextResponse.java
+|   |   |   |   |               |   |       
+|   |   |   |   |               |   +---request
+|   |   |   |   |               |   |       AuctionApplicationRequest.java
+|   |   |   |   |               |   |       AuctionCreateRequest.java
+|   |   |   |   |               |   |       AuctionRulesRequest.java
+|   |   |   |   |               |   |       AuctionUpdateRequest.java
+|   |   |   |   |               |   |       BidRequest.java
+|   |   |   |   |               |   |       ClientSpendDto.java
+|   |   |   |   |               |   |       ForgotPasswordRequest.java
+|   |   |   |   |               |   |       LoginRequest.java
+|   |   |   |   |               |   |       PasswordResetNotificationRequest.java
+|   |   |   |   |               |   |       PaymentNotificationRequest.java
+|   |   |   |   |               |   |       PlayerAssignmentRequest.java
+|   |   |   |   |               |   |       PlayerCreateRequest.java
+|   |   |   |   |               |   |       PlayerUpdateRequest.java
+|   |   |   |   |               |   |       RegisterRequest.java
+|   |   |   |   |               |   |       RegistrationNotificationRequest.java
+|   |   |   |   |               |   |       ResetPasswordRequest.java
+|   |   |   |   |               |   |       TeamCreateRequest.java
+|   |   |   |   |               |   |       TeamUpdateRequest.java
+|   |   |   |   |               |   |       UserCreateRequest.java
+|   |   |   |   |               |   |       UserUpdateRequest.java
+|   |   |   |   |               |   |       
+|   |   |   |   |               |   \---response
+|   |   |   |   |               |           AuctionApplicationResponse.java
+|   |   |   |   |               |           AuctionInvitationResponse.java
+|   |   |   |   |               |           AuctionReportResponse.java
+|   |   |   |   |               |           AuctionResponse.java
+|   |   |   |   |               |           BidResponse.java
+|   |   |   |   |               |           DashboardSummaryResponse.java
+|   |   |   |   |               |           JwtAuthResponse.java
+|   |   |   |   |               |           MessageResponse.java
+|   |   |   |   |               |           NotificationResponse.java
+|   |   |   |   |               |           PageResponse.java
+|   |   |   |   |               |           PlayerResponse.java
+|   |   |   |   |               |           TeamResponse.java
+|   |   |   |   |               |           TeamSummaryResponse.java
+|   |   |   |   |               |           UserSummaryResponse.java
+|   |   |   |   |               |           
+|   |   |   |   |               +---entity
+|   |   |   |   |               |       ApplicationStatus.java
+|   |   |   |   |               |       Auction.java
+|   |   |   |   |               |       AuctionApplication.java
+|   |   |   |   |               |       AuctionInvitation.java
+|   |   |   |   |               |       AuctionPlayer.java
+|   |   |   |   |               |       AuctionRules.java
+|   |   |   |   |               |       AuctionRuleTemplate.java
+|   |   |   |   |               |       AuctionStatus.java
+|   |   |   |   |               |       AuctionWatchlist.java
+|   |   |   |   |               |       Bid.java
+|   |   |   |   |               |       GlobalSetting.java
+|   |   |   |   |               |       InvitationStatus.java
+|   |   |   |   |               |       NominationMethod.java
+|   |   |   |   |               |       Notification.java
+|   |   |   |   |               |       Player.java
+|   |   |   |   |               |       PlayerCategory.java
+|   |   |   |   |               |       PlayerRole.java
+|   |   |   |   |               |       PlayerStatistics.java
+|   |   |   |   |               |       PlayerStatus.java
+|   |   |   |   |               |       RegistrationMode.java
+|   |   |   |   |               |       Role.java
+|   |   |   |   |               |       Team.java
+|   |   |   |   |               |       User.java
+|   |   |   |   |               |       UserStatus.java
+|   |   |   |   |               |       Watchlist.java
+|   |   |   |   |               |       
+|   |   |   |   |               +---event
+|   |   |   |   |               |   |   PlayerSoldEvent.java
+|   |   |   |   |               |   |   
+|   |   |   |   |               |   \---listener
+|   |   |   |   |               |           NotificationEventListener.java
+|   |   |   |   |               |           
+|   |   |   |   |               +---exception
+|   |   |   |   |               |       ErrorResponse.java
+|   |   |   |   |               |       GlobalExceptionHandler.java
+|   |   |   |   |               |       ResourceNotFoundException.java
+|   |   |   |   |               |       
+|   |   |   |   |               +---mapper
+|   |   |   |   |               |       DtoMapper.java
+|   |   |   |   |               |       
+|   |   |   |   |               +---publisher
+|   |   |   |   |               |       EventPublisher.java
+|   |   |   |   |               |       
+|   |   |   |   |               +---repository
+|   |   |   |   |               |   |   AuctionApplicationRepository.java
+|   |   |   |   |               |   |   AuctionInvitationRepository.java
+|   |   |   |   |               |   |   AuctionPlayerRepository.java
+|   |   |   |   |               |   |   AuctionRepository.java
+|   |   |   |   |               |   |   AuctionRulesRepository.java
+|   |   |   |   |               |   |   AuctionRuleTemplateRepository.java
+|   |   |   |   |               |   |   AuctionWatchlistRepository.java
+|   |   |   |   |               |   |   BidRepository.java
+|   |   |   |   |               |   |   GlobalSettingRepository.java
+|   |   |   |   |               |   |   NotificationRepository.java
+|   |   |   |   |               |   |   PlayerRepository.java
+|   |   |   |   |               |   |   TeamRepository.java
+|   |   |   |   |               |   |   UserRepository.java
+|   |   |   |   |               |   |   WatchlistRepository.java
+|   |   |   |   |               |   |   
+|   |   |   |   |               |   \---spec
+|   |   |   |   |               |           PlayerSpecification.java
+|   |   |   |   |               |           UserSpecification.java
+|   |   |   |   |               |           
+|   |   |   |   |               +---security
+|   |   |   |   |               |       CustomUserDetails.java
+|   |   |   |   |               |       CustomUserDetailsService.java
+|   |   |   |   |               |       JwtAuthenticationFilter.java
+|   |   |   |   |               |       JwtTokenProvider.java
+|   |   |   |   |               |       SecurityConfig.java
+|   |   |   |   |               |       
+|   |   |   |   |               \---service
+|   |   |   |   |                   |   AuctionApplicationService.java
+|   |   |   |   |                   |   AuctionInvitationService.java
+|   |   |   |   |                   |   AuctionPlayerService.java
+|   |   |   |   |                   |   AuctionRuleTemplateService.java
+|   |   |   |   |                   |   AuctionService.java
+|   |   |   |   |                   |   AuctionWatchlistService.java
+|   |   |   |   |                   |   AuthService.java
+|   |   |   |   |                   |   BiddingService.java
+|   |   |   |   |                   |   DashboardService.java
+|   |   |   |   |                   |   GlobalSettingService.java
+|   |   |   |   |                   |   NotificationFacade.java
+|   |   |   |   |                   |   NotificationService.java
+|   |   |   |   |                   |   NotificationServiceClient.java
+|   |   |   |   |                   |   PaymentServiceClient.java
+|   |   |   |   |                   |   PlayerService.java
+|   |   |   |   |                   |   ReportService.java
+|   |   |   |   |                   |   StorageService.java
+|   |   |   |   |                   |   TeamService.java
+|   |   |   |   |                   |   UserService.java
+|   |   |   |   |                   |   WatchlistService.java
+|   |   |   |   |                   |   
+|   |   |   |   |                   +---ai
+|   |   |   |   |                   |       AIContextService.java
+|   |   |   |   |                   |       AIContextServiceImpl.java
+|   |   |   |   |                   |       
+|   |   |   |   |                   \---impl
+|   |   |   |   |                           AuctionApplicationServiceImpl.java
+|   |   |   |   |                           AuctionInvitationServiceImpl.java
+|   |   |   |   |                           AuctionPlayerServiceImpl.java
+|   |   |   |   |                           AuctionRuleTemplateServiceImpl.java
+|   |   |   |   |                           AuctionServiceImpl.java
+|   |   |   |   |                           AuctionWatchlistServiceImpl.java
+|   |   |   |   |                           AuthServiceImpl.java
+|   |   |   |   |                           BiddingServiceImpl.java
+|   |   |   |   |                           DashboardServiceImpl.java
+|   |   |   |   |                           FileSystemStorageService.java
+|   |   |   |   |                           PlayerServiceImpl.java
+|   |   |   |   |                           ReportServiceImpl.java
+|   |   |   |   |                           TeamServiceImpl.java
+|   |   |   |   |                           UserServiceImpl.java
+|   |   |   |   |                           WatchlistServiceImpl.java
+|   |   |   |   |                           
+|   |   |   |   \---resources
+|   |   |   |       |   application.yml
+|   |   |   |       |   
+|   |   |   |       \---mock_data
+|   |   |   |               auctions.sql
+|   |   |   |               bids.sql
+|   |   |   |               notifications.sql
+|   |   |   |               payments.sql
+|   |   |   |               players.sql
+|   |   |   |               teams.sql
+|   |   |   |               users.sql
+|   |   |   |               
+|   |   |   \---test
+|   |   |       \---java
+|   |   |           \---com
+|   |   |               \---auctxi
+|   |   |                   \---core
+|   |   |                           CoreServiceApplicationTests.java
+|   |   |                           
+|   |   \---uploads
+|   |           3abb6ee7-103b-4d83-b264-cecb8cdf2722.webp
+|   |           43c92839-3247-4dff-84c7-10216bebbcea.webp
+|   |           71f6737f-c522-45d5-b2b1-59db86a6aca4.jpeg
+|   |           72af9737-e54c-446f-9c1d-875d79135bca.webp
+|   |           a9e751cf-03e9-4c92-9d81-d4ad443ad90a.webp
+|   |           dd70bd2f-73d4-45a5-ad50-6b1e7f8a4a89.webp
+|   |           fce23d73-6536-4127-83f8-d3c84a69bccd.jpeg
+|   |           
+|   +---NotificationService
+|   |   |   appsettings.Development.json
+|   |   |   appsettings.json
+|   |   |   Dockerfile
+|   |   |   NotificationService.csproj
+|   |   |   NotificationService.http
+|   |   |   Program.cs
+|   |   |   
+|   |   +---Controllers
+|   |   |       NotificationController.cs
+|   |   |       
+|   |   +---Data
+|   |   |       NotificationDbContext.cs
+|   |   |       
+|   |   +---Models
+|   |   |       NotificationLog.cs
+|   |   |       NotificationRequests.cs
+|   |   |       
+|   |   +---Properties
+|   |   |       launchSettings.json
+|   |   |       
+|   |   \---Services
+|   |           IEmailService.cs
+|   |           IInAppNotificationService.cs
+|   |           InAppNotificationService.cs
+|   |           MockEmailService.cs
+|   |           NotificationConsumerService.cs
+|   |           SmtpEmailService.cs
+|   |           
+|   \---PaymentService
+|       |   appsettings.Development.json
+|       |   appsettings.json
+|       |   Dockerfile
+|       |   PaymentService.csproj
+|       |   PaymentService.http
+|       |   Program.cs
+|       |   
+|       +---Controllers
+|       |       PaymentController.cs
+|       |       
+|       +---Data
+|       |       PaymentDbContext.cs
+|       |       
+|       +---DTOs
+|       |       PayAuctionFeesRequest.cs
+|       |       WalletDepositRequest.cs
+|       |       WalletDto.cs
+|       |       
+|       +---Models
+|       |       ClientPurse.cs
+|       |       ClientWallet.cs
+|       |       ClientWalletTransaction.cs
+|       |       Enums.cs
+|       |       PaymentTransaction.cs
+|       |       PlatformConfig.cs
+|       |       Settlement.cs
+|       |       
+|       +---Properties
+|       |       launchSettings.json
+|       |       
+|       \---Services
+|               IPaymentLogicService.cs
+|               IRazorpayService.cs
+|               PaymentLogicService.cs
+|               RazorpayService.cs
+|               
+\---frontend
+    |   .gitignore
+    |   build_errors.txt
+    |   DESIGN_SYSTEM.md
+    |   Dockerfile
+    |   eslint.config.js
+    |   index.html
+    |   nginx.conf
+    |   package-lock.json
+    |   package.json
+    |   README.md
+    |   vite.config.js
+    |   
+    +---public
+    |       favicon.png
+    |       favicon.svg
+    |       icons.svg
+    |       logo3.png
+    |       
+    \---src
+        |   App.jsx
+        |   index.css
+        |   main.jsx
+        |   
+        +---assets
+        |       hero.png
+        |       react.svg
+        |       vite.svg
+        |       
+        +---components
+        |   |   DashboardOverview.css
+        |   |   DashboardOverview.jsx
+        |   |   ProtectedRoute.jsx
+        |   |   
+        |   +---auction
+        |   |       ActiveTeamsCard.jsx
+        |   |       BidControls.jsx
+        |   |       BidHistoryCard.jsx
+        |   |       PlayerDetailCard.jsx
+        |   |       
+        |   +---common
+        |   |       Badge.jsx
+        |   |       Button.jsx
+        |   |       Card.jsx
+        |   |       Input.jsx
+        |   |       Modal.jsx
+        |   |       Select.jsx
+        |   |       Table.jsx
+        |   |       
+        |   +---landing
+        |   |       CTA.jsx
+        |   |       FAQ.jsx
+        |   |       Features.jsx
+        |   |       Footer.jsx
+        |   |       Hero.jsx
+        |   |       HowItWorks.jsx
+        |   |       LiveAuctions.jsx
+        |   |       Navbar.jsx
+        |   |       Pricing.jsx
+        |   |       Statistics.jsx
+        |   |       UpcomingAuctions.jsx
+        |   |       
+        |   +---layout
+        |   |       ClientHeader.jsx
+        |   |       ClientLayout.jsx
+        |   |       Header.jsx
+        |   |       Layout.jsx
+        |   |       ProtectedRoute.jsx
+        |   |       Sidebar.jsx
+        |   |       
+        |   \---ui
+        |           ActionMenu.jsx
+        |           AuctionCard.jsx
+        |           AuctionWatchlistButton.jsx
+        |           Badge.jsx
+        |           Button.jsx
+        |           Card.jsx
+        |           ChartCard.jsx
+        |           ChatWidget.jsx
+        |           DataTable.jsx
+        |           DetailPanel.jsx
+        |           EmptyState.jsx
+        |           Input.jsx
+        |           KPICard.jsx
+        |           KPICardRow.jsx
+        |           LoadingSkeleton.jsx
+        |           PageHeader.jsx
+        |           Pagination.jsx
+        |           PlayerCard.jsx
+        |           RoleBadge.jsx
+        |           SearchFilterBar.jsx
+        |           Select.jsx
+        |           StatusBadge.jsx
+        |           ToggleSwitch.jsx
+        |           WatchlistButton.jsx
+        |           
+        +---config
+        |       navigation.js
+        |       theme.js
+        |       
+        +---constants
+        |       auctionStatus.js
+        |       paymentStatus.js
+        |       playerStatus.js
+        |       roles.js
+        |       routes.js
+        |       
+        +---context
+        |       AuthContext.jsx
+        |       SidebarContext.jsx
+        |       
+        +---data
+        |       auctions.js
+        |       dashboard.js
+        |       payments.js
+        |       players.js
+        |       teams.js
+        |       users.js
+        |       
+        +---hooks
+        |       useApplications.js
+        |       useAuctions.js
+        |       useDashboard.js
+        |       useDebounce.js
+        |       useInvitations.js
+        |       useLiveAuction.js
+        |       useNotifications.js
+        |       usePagination.js
+        |       usePlayers.js
+        |       useSearch.js
+        |       useSidebar.js
+        |       useTeams.js
+        |       
+        +---layouts
+        |       AdminLayout.jsx
+        |       AuthLayout.jsx
+        |       ClientLayout.jsx
+        |       DashboardLayout.jsx
+        |       ManagerLayout.jsx
+        |       
+        +---pages
+        |   |   LandingPage.jsx
+        |   |   
+        |   +---admin
+        |   |   |   AdminDashboard.jsx
+        |   |   |   
+        |   |   +---Auctions
+        |   |   |   |   AuctionCreate.jsx
+        |   |   |   |   AuctionDetail.jsx
+        |   |   |   |   Auctions.jsx
+        |   |   |   |   AuctionsList.jsx
+        |   |   |   |   
+        |   |   |   \---tabs
+        |   |   |           BidsHistoryTab.jsx
+        |   |   |           PlayerPoolTab.jsx
+        |   |   |           SettingsTab.jsx
+        |   |   |           SystemLogsTab.jsx
+        |   |   |           TeamsTab.jsx
+        |   |   |           TimelineTab.jsx
+        |   |   |           
+        |   |   +---Bids
+        |   |   |       BidsList.jsx
+        |   |   |       
+        |   |   +---Dashboard
+        |   |   |       Dashboard.jsx
+        |   |   |       
+        |   |   +---Notifications
+        |   |   |       NotificationsPage.jsx
+        |   |   |       
+        |   |   +---Payments
+        |   |   |       Payments.jsx
+        |   |   |       PaymentsList.jsx
+        |   |   |       
+        |   |   +---Players
+        |   |   |       PlayerCreate.jsx
+        |   |   |       PlayerDetail.jsx
+        |   |   |       Players.jsx
+        |   |   |       PlayersList.jsx
+        |   |   |       
+        |   |   +---Profile
+        |   |   |       ProfilePage.jsx
+        |   |   |       
+        |   |   +---Reports
+        |   |   |       Reports.jsx
+        |   |   |       ReportsPage.jsx
+        |   |   |       
+        |   |   +---Settings
+        |   |   |   |   Settings.jsx
+        |   |   |   |   SettingsPage.jsx
+        |   |   |   |   
+        |   |   |   \---tabs
+        |   |   |           AuctionTab.jsx
+        |   |   |           BackupTab.jsx
+        |   |   |           EmailTab.jsx
+        |   |   |           GeneralTab.jsx
+        |   |   |           LogsTab.jsx
+        |   |   |           NotificationTab.jsx
+        |   |   |           PaymentTab.jsx
+        |   |   |           SecurityTab.jsx
+        |   |   |           SystemTab.jsx
+        |   |   |           
+        |   |   +---Support
+        |   |   |       SupportPage.jsx
+        |   |   |       
+        |   |   +---Teams
+        |   |   |       TeamCreate.jsx
+        |   |   |       TeamDetail.jsx
+        |   |   |       Teams.jsx
+        |   |   |       TeamsList.jsx
+        |   |   |       
+        |   |   \---Users
+        |   |           UserCreate.jsx
+        |   |           Users.jsx
+        |   |           UsersList.jsx
+        |   |           
+        |   +---auth
+        |   |       Login.jsx
+        |   |       Signup.jsx
+        |   |       
+        |   +---client
+        |   |   |   AuctionDetails.jsx
+        |   |   |   AuctionsList.jsx
+        |   |   |   ClientDashboard.jsx
+        |   |   |   LiveAuctionClient.jsx
+        |   |   |   PlayerPool.jsx
+        |   |   |   
+        |   |   +---Auctions
+        |   |   |       Auctions.jsx
+        |   |   |       
+        |   |   +---components
+        |   |   |       ClientCreateTeamTab.jsx
+        |   |   |       ClientPlayersTab.jsx
+        |   |   |       
+        |   |   +---Dashboard
+        |   |   |       Dashboard.jsx
+        |   |   |       
+        |   |   +---Payments
+        |   |   |       Payments.jsx
+        |   |   |       
+        |   |   +---Players
+        |   |   |       Players.jsx
+        |   |   |       
+        |   |   +---Profile
+        |   |   |       Profile.jsx
+        |   |   |       
+        |   |   \---Wallet
+        |   |           Wallet.jsx
+        |   |           
+        |   +---manager
+        |   |   |   LiveAuction.jsx
+        |   |   |   LiveTeams.jsx
+        |   |   |   ManagerDashboard.jsx
+        |   |   |   PlayerPool.jsx
+        |   |   |   
+        |   |   +---Applications
+        |   |   |       ApplicationsList.jsx
+        |   |   |       
+        |   |   +---Auctions
+        |   |   |   |   AuctionCreate.jsx
+        |   |   |   |   AuctionDetail.jsx
+        |   |   |   |   AuctionEdit.jsx
+        |   |   |   |   Auctions.jsx
+        |   |   |   |   AuctionsList.jsx
+        |   |   |   |   
+        |   |   |   \---components
+        |   |   |           PlayersTab.jsx
+        |   |   |           TeamsTab.jsx
+        |   |   |           
+        |   |   +---Bids
+        |   |   |       ManagerBidsList.jsx
+        |   |   |       
+        |   |   +---Dashboard
+        |   |   |       Dashboard.jsx
+        |   |   |       
+        |   |   +---Invitations
+        |   |   |       InvitationsList.jsx
+        |   |   |       
+        |   |   +---Payments
+        |   |   |       Payments.jsx
+        |   |   |       
+        |   |   +---Players
+        |   |   |       PlayerCreate.jsx
+        |   |   |       PlayerDetail.jsx
+        |   |   |       Players.jsx
+        |   |   |       
+        |   |   +---Profile
+        |   |   |       ManagerProfilePage.jsx
+        |   |   |       
+        |   |   +---Reports
+        |   |   |       Reports.jsx
+        |   |   |       
+        |   |   +---Settings
+        |   |   |       ManagerSettingsPage.jsx
+        |   |   |       
+        |   |   +---Teams
+        |   |   |       ManagerTeamDetail.jsx
+        |   |   |       ManagerTeamsList.jsx
+        |   |   |       
+        |   |   \---Watchlist
+        |   |           Watchlist.jsx
+        |   |           
+        |   +---payments
+        |   |       PaymentHistory.jsx
+        |   |       
+        |   +---players
+        |   |       PlayerManagement.jsx
+        |   |       
+        |   +---reports
+        |   |       Reports.jsx
+        |   |       
+        |   \---teams
+        |           TeamManagement.jsx
+        |           
+        +---routes
+        |       ProtectedRoute.jsx
+        |       
+        +---services
+        |       api.js
+        |       auctionsService.js
+        |       paymentService.js
+        |       playerService.js
+        |       teamService.js
+        |       userService.js
+        |       
+        +---styles
+        |       animations.css
+        |       design-tokens.css
+        |       typography.css
+        |       utilities.css
+        |       variables.css
+        |       
+        \---utils
+                cn.js
+                formatCurrency.js
+                formatDate.js
+                helpers.js
+                
