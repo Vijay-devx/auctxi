@@ -120,6 +120,8 @@ def _generate_via_openai_stream(prompt: str, chat_history: list = None, user_con
                 if function_name in AVAILABLE_TOOLS:
                     try:
                         args = json.loads(tool_call.function.arguments or "{}")
+                        if args is None:
+                            args = {}
                     except Exception:
                         args = {}
                     

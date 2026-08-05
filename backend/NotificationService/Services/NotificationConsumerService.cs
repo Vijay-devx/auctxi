@@ -32,11 +32,17 @@ public class NotificationConsumerService : BackgroundService
         _logger.LogInformation("Connecting to RabbitMQ...");
         try
         {
-            var factory = new ConnectionFactory
+            var rabbitUrl = Environment.GetEnvironmentVariable("RABBITMQ_URL");
+            var factory = new ConnectionFactory();
+            if (!string.IsNullOrEmpty(rabbitUrl))
             {
-                HostName = Environment.GetEnvironmentVariable("RABBITMQ_HOST") ?? "localhost",
-                Port = int.TryParse(Environment.GetEnvironmentVariable("RABBITMQ_PORT"), out var p) ? p : 5672
-            };
+                factory.Uri = new Uri(rabbitUrl);
+            }
+            else
+            {
+                factory.HostName = Environment.GetEnvironmentVariable("RABBITMQ_HOST") ?? "localhost";
+                factory.Port = int.TryParse(Environment.GetEnvironmentVariable("RABBITMQ_PORT"), out var p) ? p : 5672;
+            }
             _connection = await factory.CreateConnectionAsync();
             _channel = await _connection.CreateChannelAsync();
 

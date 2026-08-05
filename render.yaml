@@ -59,13 +59,7 @@ services:
         value: "avnadmin"
       - key: SPRING_DATASOURCE_PASSWORD
         sync: false
-      - key: SPRING_RABBITMQ_HOST
-        value: "warthog.lmq.cloudamqp.com"
-      - key: SPRING_RABBITMQ_PORT
-        value: "5671"
-      - key: SPRING_RABBITMQ_USERNAME
-        value: "ozgybdvd"
-      - key: SPRING_RABBITMQ_PASSWORD
+      - key: SPRING_RABBITMQ_ADDRESSES
         sync: false
 
   # 3. Notification Service (.NET)
@@ -80,13 +74,7 @@ services:
         value: "http://+:8080"
       - key: ConnectionStrings__DefaultConnection
         sync: false
-      - key: RABBITMQ_HOST
-        value: "warthog.lmq.cloudamqp.com"
-      - key: RABBITMQ_PORT
-        value: "5671"
-      - key: RABBITMQ_USER
-        value: "ozgybdvd"
-      - key: RABBITMQ_PASSWORD
+      - key: RABBITMQ_URL
         sync: false
       - key: USE_MOCK_EMAIL
         value: "true"
