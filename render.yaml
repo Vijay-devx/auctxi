@@ -4,6 +4,7 @@ services:
     name: auctxi-gateway
     env: docker
     dockerfilePath: ./backend/api-gateway/Dockerfile
+    dockerContext: ./backend/api-gateway
     plan: free
     envVars:
       - key: PORT
@@ -31,6 +32,7 @@ services:
     name: auctxi-core
     env: docker
     dockerfilePath: ./backend/core-service/Dockerfile
+    dockerContext: ./backend/core-service
     plan: free
     envVars:
       - key: PORT
@@ -71,6 +73,7 @@ services:
     name: auctxi-notification
     env: docker
     dockerfilePath: ./backend/NotificationService/Dockerfile
+    dockerContext: ./backend/NotificationService
     plan: free
     envVars:
       - key: ASPNETCORE_URLS
@@ -93,6 +96,7 @@ services:
     name: auctxi-payment
     env: docker
     dockerfilePath: ./backend/PaymentService/Dockerfile
+    dockerContext: ./backend/PaymentService
     plan: free
     envVars:
       - key: ASPNETCORE_URLS
@@ -109,6 +113,7 @@ services:
     name: auctxi-ai
     env: docker
     dockerfilePath: ./backend/ai-service/Dockerfile
+    dockerContext: ./backend/ai-service
     plan: free
     envVars:
       - key: PORT
