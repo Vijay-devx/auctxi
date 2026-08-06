@@ -1,0 +1,131 @@
+services:
+  # 1. API Gateway
+  - type: web
+    name: auctxi-gateway
+    env: docker
+    dockerfilePath: ./backend/api-gateway/Dockerfile
+    dockerContext: ./backend/api-gateway
+    plan: free
+    envVars:
+      - key: PORT
+        value: "3000"
+      - key: JWT_SECRET
+        sync: false
+      - key: CORE_SERVICE_URL
+        fromService:
+          type: web
+          name: auctxi-core
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: PAYMENT_SERVICE_URL
+        fromService:
+          type: web
+          name: auctxi-payment
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: AI_SERVICE_URL
+        fromService:
+          type: web
+          name: auctxi-ai
+          envVarKey: RENDER_EXTERNAL_URL
+
+  # 2. Core Service (Spring Boot)
+  - type: web
+    name: auctxi-core
+    env: docker
+    dockerfilePath: ./backend/core-service/Dockerfile
+    dockerContext: ./backend/core-service
+    plan: free
+    envVars:
+      - key: PORT
+        value: "8080"
+      - key: JWT_SECRET
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+      - key: NOTIFICATION_SERVICE_URL
+        fromService:
+          type: web
+          name: auctxi-notification
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: AUCTXI_PAYMENT_URL
+        value: "https://auctxi-payment.onrender.com/api/v1/payments"
+      - key: AI_SERVICE_URL
+        fromService:
+          type: web
+          name: auctxi-ai
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: SPRING_DATASOURCE_URL
+        value: "jdbc:mysql://mysql-c0c2626-auctxi001.l.aivencloud.com:22911/defaultdb?ssl-mode=REQUIRED"
+      - key: SPRING_DATASOURCE_USERNAME
+        value: "avnadmin"
+      - key: SPRING_DATASOURCE_PASSWORD
+        sync: false
+      - key: SPRING_RABBITMQ_ADDRESSES
+        sync: false
+
+  # 3. Notification Service (.NET)
+  - type: web
+    name: auctxi-notification
+    env: docker
+    dockerfilePath: ./backend/NotificationService/Dockerfile
+    dockerContext: ./backend/NotificationService
+    plan: free
+    envVars:
+      - key: ASPNETCORE_URLS
+        value: "http://+:8080"
+      - key: ConnectionStrings__DefaultConnection
+        sync: false
+      - key: RABBITMQ_URL
+        sync: false
+      - key: USE_MOCK_EMAIL
+        value: "true"
+
+  # 4. Payment Service (.NET)
+  - type: web
+    name: auctxi-payment
+    env: docker
+    dockerfilePath: ./backend/PaymentService/Dockerfile
+    dockerContext: ./backend/PaymentService
+    plan: free
+    envVars:
+      - key: ASPNETCORE_URLS
+        value: "http://+:8080"
+      - key: ConnectionStrings__DefaultConnection
+        sync: false
+      - key: Razorpay__KeyId
+        sync: false
+      - key: Razorpay__KeySecret
+        sync: false
+
+  # 5. AI Service (Python)
+  - type: web
+    name: auctxi-ai
+    env: docker
+    dockerfilePath: ./backend/ai-service/Dockerfile
+    dockerContext: ./backend/ai-service
+    plan: free
+    envVars:
+      - key: PORT
+        value: "8000"
+      - key: LLM_PROVIDER
+        value: "openai"
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_BASE_URL
+        value: "https://api.groq.com/openai/v1"
+      - key: OPENAI_MODEL
+        value: "llama-3.1-8b-instant"
+      - key: SPRING_BOOT_URL
+        fromService:
+          type: web
+          name: auctxi-core
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: REDIS_HOST
+        value: "proud-octopus-167356.upstash.io"
+      - key: REDIS_PORT
+        value: "6379"
+      - key: REDIS_PASSWORD
+        sync: false
+      - key: REDIS_SSL
+        value: "true"
+      - key: AI_INTERNAL_TOKEN
+        sync: false
