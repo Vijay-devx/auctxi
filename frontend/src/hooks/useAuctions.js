@@ -81,7 +81,8 @@ export function useAuctions() {
 
     // WebSocket connection for real-time new auctions
     useEffect(() => {
-        const serverUrl = '/ws-auction';
+        const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
+        const serverUrl = `${baseUrl}/ws-auction`;
         const client = new Client({
             webSocketFactory: () => new SockJS(serverUrl),
             reconnectDelay: 5000,

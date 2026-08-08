@@ -10,7 +10,12 @@ const PORT = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || '4a7d1ed414474e4033ac29ccb8653d9b';
 
 // 1. Basic Middleware
-app.use(cors()); // Centralized CORS
+app.use(cors({
+    origin: function (origin, callback) {
+        callback(null, origin || '*');
+    },
+    credentials: true
+})); // Configured for WebSockets and Credentials
 app.use(morgan('dev')); // Logging
 
 // 2. Health Check Endpoint
@@ -90,6 +95,14 @@ app.use('/api', createProxyMiddleware({
 app.use('/uploads', createProxyMiddleware({
     target: CORE_SERVICE_URL,
     changeOrigin: true,
+    pathRewrite: (path, req) => req.originalUrl
+}));
+
+// Route WebSockets to Spring Boot Core Service
+app.use('/ws-auction', createProxyMiddleware({
+    target: CORE_SERVICE_URL,
+    changeOrigin: true,
+    ws: true,
     pathRewrite: (path, req) => req.originalUrl
 }));
 

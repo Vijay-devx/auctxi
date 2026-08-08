@@ -34,8 +34,9 @@ export const useNotifications = () => {
 
     let client = null;
     if (user?.id) {
+       const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
        client = new Client({
-          webSocketFactory: () => new SockJS('/ws-auction'),
+          webSocketFactory: () => new SockJS(`${baseUrl}/ws-auction`),
           reconnectDelay: 10000,
        });
        
