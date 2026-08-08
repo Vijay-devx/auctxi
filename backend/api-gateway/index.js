@@ -7,8 +7,7 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const base64Secret = process.env.JWT_SECRET || '4a7d1ed414474e4033ac29ccb8653d9b';
-const JWT_SECRET = Buffer.from(base64Secret, 'base64'); // Must match Spring Boot's Decoders.BASE64.decode
+const JWT_SECRET = process.env.JWT_SECRET || '4a7d1ed414474e4033ac29ccb8653d9b';
 
 // 1. Basic Middleware
 app.use(cors()); // Centralized CORS
