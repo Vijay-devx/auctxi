@@ -67,7 +67,7 @@ public class JwtTokenProvider {
      * Helper method to convert the Base64 encoded string secret into a cryptographic key.
      */
     private SecretKey key() {
-        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
+        return Keys.hmacShaKeyFor(jwtSecret.getBytes(java.nio.charset.StandardCharsets.UTF_8));
     }
 
     /**
