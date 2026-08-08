@@ -39,7 +39,8 @@ const authenticateToken = (req, res, next) => {
         return res.status(401).json({ message: 'Unauthorized: No token provided' });
     }
 
-    jwt.verify(token, JWT_SECRET, (err, user) => {
+    // Spring Boot uses Base64 decoded secret, so Node.js MUST parse it as base64 Buffer to match HMAC signatures
+    jwt.verify(token, Buffer.from(JWT_SECRET, 'base64'), (err, user) => {
         if (err) {
             console.error(`[Gateway] JWT verification failed for ${req.originalUrl}: ${err.message}`);
             return res.status(403).json({ message: 'Forbidden: Invalid token' });

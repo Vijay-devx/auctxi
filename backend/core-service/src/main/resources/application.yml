@@ -21,6 +21,8 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
   rabbitmq:
     addresses: ${SPRING_RABBITMQ_ADDRESSES:amqp://guest:guest@localhost:5672/}
+    ssl:
+      enabled: ${SPRING_RABBITMQ_SSL_ENABLED:true}
   mail:
     host: ${SPRING_MAIL_HOST:localhost}
     port: ${SPRING_MAIL_PORT:25}
